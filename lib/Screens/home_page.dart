@@ -1,0 +1,44 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:project/Todo_Bloc/todo_bloc.dart';
+
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<TodoBloc, int>(
+      builder: (context, state) {
+        return Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.deepPurple,
+            title: Text(
+              BlocProvider.of<TodoBloc>(context).titels[state],
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            centerTitle: true,
+          ),
+          bottomNavigationBar: BottomNavigationBar(
+            items: [
+              BottomNavigationBarItem(icon: Icon(Icons.task), label: 'Tasks'),
+              BottomNavigationBarItem(icon: Icon(Icons.done), label: 'Done'),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.archive),
+                label: 'Archived',
+              ),
+            ],
+            currentIndex: state,
+            onTap: (value) {
+              state = value;
+              BlocProvider.of<TodoBloc>(context).add(state);
+            },
+          ),
+          body: BlocProvider.of<TodoBloc>(context).pages[state],
+        );
+      },
+    );
+  }
+}

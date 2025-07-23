@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project/Todo_Bloc/todo_bloc.dart';
+import 'package:project/new_task_form.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -21,22 +22,37 @@ class HomePage extends StatelessWidget {
             ),
             centerTitle: true,
           ),
-          bottomNavigationBar: BottomNavigationBar(
-            items: [
-              BottomNavigationBarItem(icon: Icon(Icons.task), label: 'Tasks'),
-              BottomNavigationBarItem(icon: Icon(Icons.done), label: 'Done'),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.archive),
-                label: 'Archived',
-              ),
-            ],
-            currentIndex: state,
-            onTap: (value) {
-              state = value;
-              BlocProvider.of<TodoBloc>(context).add(state);
-            },
+          bottomNavigationBar: Theme(
+            data: Theme.of(context).copyWith(splashColor: Colors.transparent),
+            child: BottomNavigationBar(
+              items: [
+                BottomNavigationBarItem(icon: Icon(Icons.task), label: 'Tasks'),
+                BottomNavigationBarItem(icon: Icon(Icons.done), label: 'Done'),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.archive),
+                  label: 'Archived',
+                ),
+              ],
+              currentIndex: state,
+              onTap: (value) {
+                state = value;
+                BlocProvider.of<TodoBloc>(context).add(state);
+              },
+            ),
           ),
           body: BlocProvider.of<TodoBloc>(context).pages[state],
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              showModalBottomSheet(
+                context: context,
+                builder: (context) => Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: NewTaskForm(),
+                ),
+              );
+            },
+            child: Icon(Icons.add),
+          ),
         );
       },
     );

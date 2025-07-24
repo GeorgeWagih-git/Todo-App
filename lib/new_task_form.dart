@@ -104,8 +104,12 @@ class NewTaskForm extends StatelessWidget {
                         ),
                       ),
                     );
+                    BlocProvider.of<TasksBloc>(
+                      context,
+                    ).add(GetDatabaseTasksEvent());
+                    Navigator.pop(context);
                   },
-                  child: Text('Confirm'),
+                  child: Text('Save'),
                 ),
                 SizedBox(height: 30),
               ],

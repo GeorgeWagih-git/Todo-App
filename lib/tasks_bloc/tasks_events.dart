@@ -13,3 +13,5 @@ class DeleteTaskEvent extends TasksEvents {
 }
 
 class CreateDatabaseEvent extends TasksEvents {}
+
+class GetDatabaseTasksEvent extends TasksEvents {}

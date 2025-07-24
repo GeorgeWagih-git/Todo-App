@@ -43,6 +43,12 @@ class TasksBloc extends Bloc<TasksEvents, TasksStates> {
         print('Database error: $e');
       }
     });
+    on<GetDatabaseTasksEvent>((event, emit) async {
+      List<Map>? list = await db?.rawQuery('SELECT * FROM Tasks');
+
+      print('when get tasks from table : $list');
+      emit(GetTasksState(tasks: list!));
+    });
     on<DeleteTaskEvent>((event, emit) async {});
   }
 }

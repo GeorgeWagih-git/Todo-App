@@ -11,3 +11,5 @@ class DeleteTaskEvent extends TasksEvents {
   Task task;
   DeleteTaskEvent({required this.task});
 }
+
+class CreateDatabaseEvent extends TasksEvents {}
